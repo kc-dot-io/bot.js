@@ -8,7 +8,7 @@
     "irc" : "0.3.4",
     "rabbit.js" : "0.2.0"
   },
-  "engine": {
+  "engines": {
     "node": "0.6.5",
     "npm": "1.1.35"
   }
