@@ -1,5 +1,6 @@
 console.log("Bot Started...")
 
+
 var spawn = require('child_process').spawn,
   kill = require('child_process').kill,
   irc = require('irc'),
@@ -38,7 +39,6 @@ var BOT = {};
       }
 
     });
-
 
     /*
       BOT API for messaging interface
