@@ -1,4 +1,4 @@
-var context = require('rabbit.js').createContext('amqp://appla.bz');
+var context = require('rabbit.js').createContext();
 context.on('ready', function() {
   var pub = context.socket('PUB'), sub = context.socket('SUB');
   sub.on('data', function(note) { console.log("Received:" + note); });
