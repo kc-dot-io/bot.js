@@ -115,11 +115,9 @@ var BOT = {};
       }
 
       if( found || found === 0 && found !== false) {
-        /*
-         *if( BOT.subscriptions.length == 1 ) BOT.subscriptions = [];
-         *else BOT.subscriptions = BOT.subscriptions.splice(found,1);
-         */
-        BOT.subscriptions[found].callback = function() {};
+
+        if( BOT.subscriptions.length == 1 ) BOT.subscriptions = [];
+        else BOT.subscriptions = BOT.subscriptions.splice(found,1);
         return client.say(to, from+' - unsubscribed to '+args[0]);
       } else {
         client.say(to, from+' - subscription not found: '+args[0]);
@@ -128,15 +126,14 @@ var BOT = {};
 
     BOT.API.list = function( to, from, msg, args )
     {
-      if(BOT.subscriptions.length == 0) return client.say(to, from+' - no subscriptions exist');
+      var found = false;
       for( var i=0; i<BOT.subscriptions.length; i++ ) {
-        client.say(to, from+' - '+BOT.subscriptions[i].uid );
+        if( BOT.subscriptions[i].callback ) {
+          found = client.say(to, from+' - '+BOT.subscriptions[i].uid );
+        }
       }
+      if( found === false ) client.say(to, from+' - no subscriptions exist');
     };
-
-    BOT.API.dms.subscribe = BOT.API.subscribe;
-    BOT.API.dms.unsubscribe = BOT.API.unsubscribe;
-    BOT.API.dms.list = BOT.API.list;
 
     BOT.API.ping = {};
     BOT.API.ping.all = function( to, from, msg, args )
