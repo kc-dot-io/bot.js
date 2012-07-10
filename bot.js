@@ -1,11 +1,11 @@
 console.log("Bot Started...")
 
-
 var spawn = require('child_process').spawn,
   kill = require('child_process').kill,
   irc = require('irc'),
   gh = require('github'),
   github = new gh({ version: '3.0.0' }),
+  config = require('./config'),
   rabbit = require('rabbit.js').createContext();
 
 var BOT = {};
@@ -16,8 +16,8 @@ var BOT = {};
   BOT.child_process = ( (typeof process.argv[5] == "undefined" ) ? false : true ),
   BOT.child_prefix = ( ( BOT.channel_name.indexOf('test') > -1 ) ? 'dev-' : '' ),
   BOT.debug = true,
-  BOT.git_user = 'slajax',
-  BOT.git_pass = '!e3JK92P',
+  BOT.git_user = config.git_user,
+  BOT.git_pass = config.git_pass,
   BOT.children = [],
   BOT.subscriptions = [];
 
@@ -108,15 +108,18 @@ var BOT = {};
 
     BOT.API.unsubscribe = function( to, from, msg, args )
     {
+
       var found = false;
       for(var i=0; i<BOT.subscriptions.length; i++) {
         if( BOT.subscriptions[i].uid == args[0] ) found = i;
       }
 
       if( found || found === 0 && found !== false) {
-        if( BOT.subscriptions.length == 1 ) BOT.subscriptions = [];
-        else BOT.subscriptions = BOT.subscriptions.splice(found,1);
-        sub.disconnect(args[0]);
+        /*
+         *if( BOT.subscriptions.length == 1 ) BOT.subscriptions = [];
+         *else BOT.subscriptions = BOT.subscriptions.splice(found,1);
+         */
+        BOT.subscriptions[found].callback = function() {};
         return client.say(to, from+' - unsubscribed to '+args[0]);
       } else {
         client.say(to, from+' - subscription not found: '+args[0]);
