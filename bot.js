@@ -90,7 +90,7 @@ var BOT = {};
       var subscription = { uid: args[0], to: to, from: from, msg: msg, args: args };
       subscription.callback  = function( msg )
       {
-        client.say(this.to, this.from+' - '+msg);
+        client.say(this.to, msg);
       };
 
       var found = false;
