@@ -84,7 +84,6 @@ var BOT = {};
         });
     };
 
-    BOT.API.dms = {};
     BOT.API.subscribe = function( to, from, msg, args )
     {
       var subscription = { uid: args[0], to: to, from: from, msg: msg, args: args };
